@@ -237,7 +237,7 @@
                 Login Form
             </div>
             <div class="title signup">
-                Signup Form
+                Sign up Form
             </div>
         </div>
         <div class="form-container">
@@ -249,12 +249,12 @@
                 <div class="slider-tab"></div>
             </div>
             <div class="form-inner">
-                <form action="#" class="login">
+                <form action="../login" class="login" method="POST">
                     <div class="field">
-                        <input type="text" placeholder="Email Address" required>
+                        <input type="text" placeholder="Username" name="username" required>
                     </div>
                     <div class="field">
-                        <input type="password" placeholder="Password" required>
+                        <input type="password" placeholder="Password" name="password" required>
                     </div>
                     <div class="pass-link">
                         <a href="#">Forgot password?</a>
