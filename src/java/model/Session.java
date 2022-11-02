@@ -19,7 +19,7 @@ public class Session {
     private TimeSlot timeslot;
     private int index;
     private Lecturer lecturer;
-    private boolean attandated;
+    private boolean attanded;
     private ArrayList<Attandance> attandances = new ArrayList<>();
 
     public int getId() {
@@ -78,14 +78,14 @@ public class Session {
         this.lecturer = lecturer;
     }
 
-    public boolean isAttandated() {
-        return attandated;
+    public boolean isAttanded() {
+        return attanded;
     }
 
-    public void setAttandated(boolean attandated) {
-        this.attandated = attandated;
+    public void setAttanded(boolean attanded) {
+        this.attanded = attanded;
     }
-
+    
     public ArrayList<Attandance> getAttandances() {
         return attandances;
     }
