@@ -6,6 +6,7 @@ package controller;
 
 import dal.AccountDBContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,16 +22,33 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String user = request.getParameter("username");
+        String pass = request.getParameter("password");
+        String r = request.getParameter("remember");
         AccountDBContext db = new AccountDBContext();
-        Account account = db.get(username, password);
-        if(account==null)
-        {
-            response.getWriter().println("login failed!");
-        }
-        else
-        {
+        Account account = db.get(user, pass);
+        
+        if(account == null){
+            response.getWriter().println("login failed!");         
+        }if(account != null){
+            request.getSession().setAttribute("account", account);
+
+            Cookie username = new Cookie("user", user);
+            Cookie password = new Cookie("pass",pass);           
+            Cookie rem = new Cookie("remember",r);
+            if(r == null ){
+                username.setMaxAge(0);
+                password.setMaxAge(0);
+                rem.setMaxAge(0);
+                
+            }else{
+                username.setMaxAge(60 * 60);// 1h
+                password.setMaxAge(60 * 60); // 1h
+                rem.setMaxAge(60*60); // 1h
+            }
+            response.addCookie(username);
+            response.addCookie(password);
+            response.addCookie(rem);
             request.getSession().setAttribute("account", account);
             response.getWriter().println("login successful!");
         }
@@ -48,7 +66,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("view/login.jsp").forward(request, response);
+        response.sendRedirect("view/login.jsp");
     }
 
     /**

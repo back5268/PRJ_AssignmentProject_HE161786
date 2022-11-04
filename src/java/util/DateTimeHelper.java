@@ -91,6 +91,47 @@ public class DateTimeHelper {
         return "Error";
     }
     
+    public static int getYear(java.sql.Date s) {
+        java.util.Date d = toDateUtil(s);
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+        int year = c.get(Calendar.YEAR);
+        return year;
+    }
+    
+    public static String getDayMonth(java.sql.Date s) {
+        java.util.Date d = toDateUtil(s);
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int month = c.get(Calendar.MONTH) + 1;
+        String days = (day<10)?"0" + Integer.toString(day):Integer.toString(day);
+        String months = (month<10)?"0" + Integer.toString(month):Integer.toString(month);
+        return months + "-" + days;
+    }
+    
+    public static String getWeek(java.sql.Date s1, java.sql.Date s2) {
+        return DateTimeHelper.getDayMonth(s1) + " To " + DateTimeHelper.getDayMonth(s2);
+    }
+    
+    public static ArrayList<String> 
+        getDayMonthList(java.sql.Date from) {
+            ArrayList<String> daymonths = new ArrayList<>();
+        int check = 0;
+        java.util.Date e_from = toDateUtil(from);
+        e_from = DateTimeHelper.addDays(e_from, -54);
+        java.util.Date e_to = DateTimeHelper.addDays(e_from, 6);
+        while(check<20)
+        {
+            String daymonth = DateTimeHelper.getWeek(DateTimeHelper.toDateSql(e_from), toDateSql(e_to));
+            daymonths.add(daymonth);
+            e_from = DateTimeHelper.addDays(e_from, 6);
+            e_to = DateTimeHelper.addDays(e_from, 6);
+            check+=1;
+        }
+        return daymonths;
+        }
+    
     public static int compare(java.sql.Date a, java.sql.Date b)
     {
        

@@ -38,14 +38,15 @@ public class TimeTable extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int lid = 0;
+        int lid;
         try {
             lid = Integer.parseInt(request.getParameter("lid"));
-            String raw_from = request.getParameter("from");
-            String raw_to = request.getParameter("to");
+            String raw_year = request.getParameter("year");
+            String raw_daymonth = request.getParameter("week");
+            
             java.sql.Date from = null;
             java.sql.Date to = null;
-            if (raw_from == null || raw_from.length() == 0) {
+            if (raw_year == null || raw_year.length() == 0 || raw_daymonth == null || raw_daymonth.length() == 0) {
                 Date today = new Date();
                 int todayOfWeek = DateTimeHelper.getDayofWeek(today);
                 Date e_from = DateTimeHelper.addDays(today, 2 - todayOfWeek);
@@ -53,14 +54,19 @@ public class TimeTable extends HttpServlet {
                 from = DateTimeHelper.toDateSql(e_from);
                 to = DateTimeHelper.toDateSql(e_to);
             } else {
-                from = java.sql.Date.valueOf(raw_from);
-                to = java.sql.Date.valueOf(raw_to);
+                from = java.sql.Date.valueOf(Integer.parseInt(raw_year) + "-" + raw_daymonth.substring(0,5));
+                to = DateTimeHelper.toDateSql(DateTimeHelper.addDays(DateTimeHelper.toDateUtil(from), 6));
             }
-
+            
             request.setAttribute("from", from);
             request.setAttribute("to", to);
             request.setAttribute("dates", DateTimeHelper.getDateList(from, to));
-
+            request.setAttribute("year", DateTimeHelper.getYear(from));
+            
+            request.setAttribute("daymonth", DateTimeHelper.getWeek(from, to));
+            request.setAttribute("daymonths", DateTimeHelper.getDayMonthList(from));
+            
+            
             TimeSlotDBContext slotDB = new TimeSlotDBContext();
             ArrayList<TimeSlot> slots = slotDB.list();
             request.setAttribute("slots", slots);

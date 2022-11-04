@@ -14,7 +14,7 @@ import model.Account;
 
 /**
  *
- * @author sonnt
+ * @author bacht
  */
 public class AccountDBContext extends DBContext<Account> {
 
