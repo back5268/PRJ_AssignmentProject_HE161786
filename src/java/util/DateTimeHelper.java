@@ -119,13 +119,13 @@ public class DateTimeHelper {
             ArrayList<String> daymonths = new ArrayList<>();
         int check = 0;
         java.util.Date e_from = toDateUtil(from);
-        e_from = DateTimeHelper.addDays(e_from, -54);
+        e_from = DateTimeHelper.addDays(e_from, -63);
         java.util.Date e_to = DateTimeHelper.addDays(e_from, 6);
         while(check<20)
         {
             String daymonth = DateTimeHelper.getWeek(DateTimeHelper.toDateSql(e_from), toDateSql(e_to));
             daymonths.add(daymonth);
-            e_from = DateTimeHelper.addDays(e_from, 6);
+            e_from = DateTimeHelper.addDays(e_from, 7);
             e_to = DateTimeHelper.addDays(e_from, 6);
             check+=1;
         }

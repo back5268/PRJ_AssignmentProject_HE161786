@@ -15,11 +15,18 @@
     <body>
         <c:if test="${sessionScope.account ne null}">
             Hello ${sessionScope.account.displayname}, click
-            <a href="logout">here</a> to logout.
+            <a href="Logout">here</a> to logout.
         </c:if>
             <c:if test="${sessionScope.account eq null}">
             click
             <a href="login">here</a> to login.
         </c:if>
+            <br/>
+            cccccccccc
+            <c:forEach items="${requestScope.account}" var="a">
+                dsa
+            </c:forEach>
+            <a href=" <c:if test="${requestScope.account.roles} == 2">timetable?lid=1</c:if> ">Timetable</a> <br/>
+            <a href="takeattandance?id=1">Take attandance</a>
     </body>
 </html>

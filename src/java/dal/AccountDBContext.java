@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
+import model.Role;
 
 /**
  *
@@ -20,19 +21,39 @@ public class AccountDBContext extends DBContext<Account> {
 
     public Account get(String username, String password) {
         try {
-            String sql = "SELECT username,displayname FROM Account \n"
-                    + "WHERE username = ? AND [password] = ?";
+            String sql = "SELECT \n"
+                    + "	a.username,a.displayname\n"
+                    + "	,r.rid,r.rname\n"
+                    + "	FROM Account a \n"
+                    + "	LEFT JOIN Role_Account ra ON a.username = ra.username\n"
+                    + "	LEFT JOIN [Role] r ON r.rid = ra.rid\n"
+                    + "WHERE a.username = ? AND a.password = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
             stm.setString(2, password);
             ResultSet rs = stm.executeQuery();
-            if(rs.next())
-            {
-                Account account = new Account();
-                account.setUsername(username);
-                account.setDisplayname(rs.getString("displayname"));
-                return account;
+            Account account = null;
+            Role currentRole = new Role();
+            currentRole.setId(-1);
+            while (rs.next()) {
+                if (account == null) {
+                    account = new Account();
+                    account.setUsername(username);
+                    account.setDisplayname(rs.getString("displayname"));
+                }
+                int rid = rs.getInt("rid");
+                if(rid!=0)
+                {
+                    if(rid!=currentRole.getId())
+                    {
+                        currentRole = new Role();
+                        currentRole.setId(rs.getInt("rid"));
+                        currentRole.setName(rs.getString("rname"));
+                        account.getRoles().add(currentRole);
+                    }
+                }
             }
+            return account;
         } catch (SQLException ex) {
             Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }

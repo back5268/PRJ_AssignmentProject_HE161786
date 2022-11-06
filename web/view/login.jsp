@@ -230,7 +230,7 @@
                     <div class="slider-tab"></div>
                 </div>
                 <div class="form-inner">
-                    <form action="../login" method="POST" class="login">
+                    <form action="login" method="POST" class="login">
                         <div class="field">
                             <input type="text" placeholder="Username" name="username" required>
                         </div>

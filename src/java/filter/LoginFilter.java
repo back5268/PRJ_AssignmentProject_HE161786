@@ -108,7 +108,7 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         String url = httpRequest.getServletPath();
-        if (url.endsWith(".html")) {
+        if (url.endsWith(".jsp")) {
             httpResponse.sendRedirect("login");
         }
         Throwable problem = null;

@@ -13,8 +13,50 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .container {
+            width: 95%;
+            padding-left: 5%;
+            padding-top: 32px;
+        }
+        
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        
+        table {
+            margin-top: 32px;
+        }
+        
+        .container tr {
+            height: 80px;
+        }
+        
+        .container tr td {
+            width: 240px;
+            text-align: center;
+        }
+    </style>
+    
     <body>
-        ${requestScope.ses.id}, class: ${requestScope.ses.group.name} 
+        <div class="container">
+            ${requestScope.ses.id}, class: ${requestScope.ses.group.name} 
         <br/>
         Subject: ${requestScope.ses.group.subject.name}
         Room: ${requestScope.ses.room.name}, Time: ${requestScope.ses.date} ${requestScope.ses.timeslot.description}
@@ -31,26 +73,27 @@
                     <td>Description</td>
                 </tr>
                 <c:forEach items="${requestScope.atts}" var="a">
-                  <tr>
-                    <td>${a.student.id}
-                        <input type="hidden" value="${a.student.id}" name="stdid"/>
-                    </td>
-                    <td>${a.student.name}</td>
-                    <td><input type="radio" 
-                               <c:if test="${a.present}">
-                               checked="checked" 
-                               </c:if>
-                               name="present${a.student.id}" value="present" /></td>
-                    <td><input type="radio"
-                               <c:if test="${!a.present}">
-                               checked="checked" 
-                               </c:if>
-                               name="present${a.student.id}" value="absent" /></td>
-                    <td><input type="" value="${a.description}" name="description${a.student.id}"></td>
-                </tr>  
+                    <tr>
+                        <td>${a.student.id}
+                            <input type="hidden" value="${a.student.id}" name="stdid"/>
+                        </td>
+                        <td>${a.student.name}</td>
+                        <td><input type="radio" 
+                                   <c:if test="${a.present}">
+                                       checked="checked" 
+                                   </c:if>
+                                   name="present${a.student.id}" value="present" /></td>
+                        <td><input type="radio"
+                                   <c:if test="${!a.present}">
+                                       checked="checked" 
+                                   </c:if>
+                                   name="present${a.student.id}" value="absent" /></td>
+                        <td><input type="" value="${a.description}" name="description${a.student.id}"></td>
+                    </tr>  
                 </c:forEach>
             </table>
             <input type="submit" value="Save"/>
         </form>
+        </div>
     </body>
 </html>

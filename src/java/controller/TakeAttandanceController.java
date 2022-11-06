@@ -83,7 +83,7 @@ public class TakeAttandanceController extends HttpServlet {
 
         SessionDBContext db = new SessionDBContext();
         db.updateAttandance(ses);
-        response.sendRedirect("takeatt?id=" + ses.getId());
+        response.sendRedirect("takeattandance?id=" + ses.getId());
     }
 
     /**
