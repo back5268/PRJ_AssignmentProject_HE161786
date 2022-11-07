@@ -19,41 +19,41 @@ import model.Role;
  */
 public class AccountDBContext extends DBContext<Account> {
 
-    public Account get(String username, String password) {
+        public Account get(String username, String password) {
         try {
-            String sql = "SELECT \n"
-                    + "	a.username,a.displayname\n"
-                    + "	,r.rid,r.rname\n"
-                    + "	FROM Account a \n"
-                    + "	LEFT JOIN Role_Account ra ON a.username = ra.username\n"
-                    + "	LEFT JOIN [Role] r ON r.rid = ra.rid\n"
-                    + "WHERE a.username = ? AND a.password = ?";
+            String sql = " SELECT [username]\n"
+                    + "      ,[password]\n"
+                    + "      ,[displayname]\n"
+                    + "  FROM [Account]  where  username =? and password=?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
             stm.setString(2, password);
             ResultSet rs = stm.executeQuery();
             Account account = null;
-            Role currentRole = new Role();
-            currentRole.setId(-1);
             while (rs.next()) {
-                if (account == null) {
-                    account = new Account();
-                    account.setUsername(username);
-                    account.setDisplayname(rs.getString("displayname"));
-                }
-                int rid = rs.getInt("rid");
-                if(rid!=0)
-                {
-                    if(rid!=currentRole.getId())
-                    {
-                        currentRole = new Role();
-                        currentRole.setId(rs.getInt("rid"));
-                        currentRole.setName(rs.getString("rname"));
-                        account.getRoles().add(currentRole);
-                    }
-                }
+                return new Account(rs.getString("username"), rs.getString("password"), null);
             }
-            return account;
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Role> getRoles(String username) {
+        try {
+            String sql = "SELECT [rid]\n"
+                    + "      ,[username]\n"
+                    + "  FROM [Role_Account] where [username]=?";
+            ArrayList<Role> roles = new ArrayList<>();
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                roles.add(new Role(rs.getInt("rid"), rs.getString("username")));
+            }
+            return roles;
         } catch (SQLException ex) {
             Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -16,6 +16,12 @@ public class Account {
     private String displayname;
     private ArrayList<Role> roles = new ArrayList<>();
 
+    public Account(String username, String password, String displayname) {
+        this.username = username;
+        this.password = password;
+        this.displayname = displayname;
+    }
+
     public ArrayList<Role> getRoles() {
         return roles;
     }

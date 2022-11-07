@@ -57,22 +57,23 @@ public class LoginController extends HttpServlet {
         AccountDBContext db = new AccountDBContext();
         Account account = db.get(user, pass);
         
-        if(account == null){
-            response.getWriter().println("login failed!");         
-        }if(account != null){
+        if (account == null) {
+            response.getWriter().println("login failed!");            
+        }
+        if (account != null) {
             request.getSession().setAttribute("account", account);
-
+            request.getSession().setAttribute("roles", db.getRoles(account.getUsername()));
             Cookie username = new Cookie("user", user);
-            Cookie password = new Cookie("pass",pass);
-            Cookie rem = new Cookie("remember",r);
-            if(r == null ){
+            Cookie password = new Cookie("pass", pass);
+            Cookie rem = new Cookie("remember", r);
+            if (r == null) {
                 username.setMaxAge(0);
                 password.setMaxAge(0);
                 rem.setMaxAge(0);
-            }else{
+            } else {
                 username.setMaxAge(60 * 60);// 1h
                 password.setMaxAge(60 * 60); // 1h
-                rem.setMaxAge(60*60); // 1h
+                rem.setMaxAge(60 * 60); // 1h
             }
             response.addCookie(username);
             response.addCookie(password);

@@ -28,10 +28,6 @@
         <servlet-name>TakeAttandanceController</servlet-name>
         <servlet-class>controller.TakeAttandanceController</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>ReportAttController</servlet-name>
-        <servlet-class>controller.ReportAttController</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>TimeTable</servlet-name>
         <url-pattern>/timetable</url-pattern>
@@ -51,10 +47,6 @@
     <servlet-mapping>
         <servlet-name>TakeAttandanceController</servlet-name>
         <url-pattern>/takeattandance</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ReportAttController</servlet-name>
-        <url-pattern>/reportatt</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

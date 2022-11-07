@@ -10,10 +10,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import model.Attandance;
+import model.Role;
 import model.Session;
 import model.Student;
 
@@ -35,24 +37,34 @@ public class TakeAttandanceController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int sesid;
-        try {
-            sesid = Integer.parseInt(request.getParameter("id"));
-            AttandanceDBContext attDB = new AttandanceDBContext();
-            ArrayList<Attandance> atts = attDB.getAttsBySessionId(sesid);
-            request.setAttribute("atts", atts);
+        HttpSession session = request.getSession();
+         if(session.getAttribute("account")==null){
+             response.sendRedirect("login");
+         }
+        ArrayList<Role> roles = (ArrayList<Role>) session.getAttribute("roles");
+        for (Role role : roles) {
+            if (role.getId() == 2) {
+                int sesid;
+                try {
+                    sesid = Integer.parseInt(request.getParameter("id"));
+                    AttandanceDBContext attDB = new AttandanceDBContext();
+                    ArrayList<Attandance> atts = attDB.getAttsBySessionId(sesid);
+                    request.setAttribute("atts", atts);
 
-            SessionDBContext sesDB = new SessionDBContext();
-            Session ses = sesDB.get(sesid);
-            request.setAttribute("ses", ses);
-        } catch (Exception e) {
-        }
+                    SessionDBContext sesDB = new SessionDBContext();
+                    Session ses = sesDB.get(sesid);
+                    request.setAttribute("ses", ses);
+                } catch (Exception e) {
+                }
 //        if(DateTimeHelper.getDaystoCurrent(ses.getDate())>=2)
 //            response.getWriter().println("this session is out of date");
 //        else if(DateTimeHelper.getDaystoCurrent(ses.getDate())< 0)
 //            response.getWriter().println("this session is not yet started");
 //        else
-        request.getRequestDispatcher("view/takeattandance.jsp").forward(request, response);
+                request.getRequestDispatcher("view/takeattandance.jsp").forward(request, response);
+                break;
+            }
+        }
     }
 
     /**
