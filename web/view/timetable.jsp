@@ -82,9 +82,9 @@
                             <input type="submit" value="View"/>
                         </form> 
                     </td>
-                    <c:forEach items="${requestScope.dates}" var="d">
-                        <td>${d}<br/> <hr> ${helper.getDayNameofWeek(d)}</td>
-                    </c:forEach>
+                <c:forEach items="${requestScope.dates}" var="d">
+                    <td>${d}<br/> <hr> ${helper.getDayNameofWeek(d)}</td>
+                </c:forEach>
                 </tr>
                 <c:forEach items="${requestScope.slots}" var="slot">
                 <tr>

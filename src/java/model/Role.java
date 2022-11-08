@@ -16,11 +16,6 @@ public class Role {
     private ArrayList<Account> accounts = new ArrayList<>();
     private ArrayList<Feature> features = new ArrayList<>();
 
-    public Role(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     public int getId() {
         return id;
     }

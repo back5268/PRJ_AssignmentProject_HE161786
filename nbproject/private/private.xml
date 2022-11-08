@@ -4,12 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/bacht/Desktop/PRJ_AssignmentProject_HE161786/src/java/controller/TakeAttandanceController.java</file>
+            <file>file:/C:/Users/bacht/Desktop/PRJ_AssignmentProject_HE161786/src/java/controller/TimeTable.java</file>
             <file>file:/C:/Users/bacht/Desktop/PRJ_AssignmentProject_HE161786/src/java/controller/ReportAttController.java</file>
             <file>file:/C:/Users/bacht/Desktop/PRJ_AssignmentProject_HE161786/web/view/reportatt.jsp</file>
             <file>file:/C:/Users/bacht/Desktop/PRJ_AssignmentProject_HE161786/src/java/model/Attandance.java</file>
             <file>file:/C:/Users/bacht/Desktop/PRJ_AssignmentProject_HE161786/src/java/model/Session.java</file>
-            <file>file:/C:/Users/bacht/Desktop/PRJ_AssignmentProject_HE161786/web/view/takeattandance.jsp</file>
             <file>file:/C:/Users/bacht/Desktop/PRJ_AssignmentProject_HE161786/web/view/timetable.jsp</file>
+            <file>file:/C:/Users/bacht/Desktop/PRJ_AssignmentProject_HE161786/web/view/login.jsp</file>
         </group>
     </open-files>
 </project-private>

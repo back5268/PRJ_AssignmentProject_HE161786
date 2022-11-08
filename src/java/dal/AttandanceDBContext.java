@@ -54,7 +54,7 @@ public class AttandanceDBContext extends DBContext<Attandance> {
         }
         return atts;
     }
-    
+
     @Override
     public void insert(Attandance model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

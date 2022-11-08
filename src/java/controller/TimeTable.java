@@ -11,13 +11,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import model.Lecturer;
-import model.Role;
 import model.Session;
 import model.TimeSlot;
 import util.DateTimeHelper;
@@ -39,6 +37,7 @@ public class TimeTable extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         int lid;
         try {
             lid = Integer.parseInt(request.getParameter("lid"));
@@ -67,6 +66,7 @@ public class TimeTable extends HttpServlet {
             request.setAttribute("daymonth", DateTimeHelper.getWeek(from, to));
             request.setAttribute("daymonths", DateTimeHelper.getDayMonthList(from));
             
+            
             TimeSlotDBContext slotDB = new TimeSlotDBContext();
             ArrayList<TimeSlot> slots = slotDB.list();
             request.setAttribute("slots", slots);
@@ -94,16 +94,7 @@ public class TimeTable extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-         if(session.getAttribute("account")==null){
-             response.sendRedirect("login");
-         }
-        ArrayList<Role> roles = (ArrayList<Role>) session.getAttribute("roles");
-        for (Role role : roles) {
-            if (role.getId() == 1) {
-                processRequest(request, response);
-            }
-        }
+        processRequest(request, response);
     }
 
     /**

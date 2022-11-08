@@ -22,7 +22,11 @@
             <a href="login">here</a> to login.
         </c:if>
             <br/>
-            <a href="timetable?lid=1">Timetable</a> <br/>
+            cccccccccc
+            <c:forEach items="${requestScope.account}" var="a">
+                dsa
+            </c:forEach>
+            <a href=" <c:if test="${requestScope.account.roles} == 2">timetable?lid=1</c:if> ">Timetable</a> <br/>
             <a href="takeattandance?id=1">Take attandance</a>
     </body>
 </html>
