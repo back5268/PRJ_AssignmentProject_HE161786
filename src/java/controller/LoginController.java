@@ -58,8 +58,7 @@ public class LoginController extends HttpServlet {
         Account account = db.get(user, pass);
         
         if (account == null) {
-            request.setAttribute("mess", "Tai Khoan Hoac Mat Khau Khong Hop Le");
-            request.getRequestDispatcher("./view/login.jsp").forward(request, response);    
+            response.getWriter().println("Login fail!!");   
         }
         if (account != null) {
             request.getSession().setAttribute("account", account);

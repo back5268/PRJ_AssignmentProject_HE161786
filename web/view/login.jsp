@@ -28,7 +28,7 @@
             align-items: center;
             height: 100%;
             width: 100%;
-            background: -webkit-linear-gradient(left, #845ec2, #00c9a7);
+            background-color: aliceblue;
         }
 
         ::selection {
@@ -81,7 +81,7 @@
             border-radius: 8px;
             border: 1px solid lightgrey;
             transition: all 0.6s ease;
-            background: -webkit-linear-gradient(left, #845ec2, #00c9a7);
+            background-color: blueviolet;
         }
 
         input[type="radio"] {
@@ -193,7 +193,7 @@
             width: 300%;
             position: absolute;
             left: -100%;
-            background: -webkit-linear-gradient(left, #845ec2, #00c9a7);
+            background-color: blueviolet;
             border-radius: 5px;
             transition: all 0.4s ease;
             ;
@@ -268,25 +268,7 @@
             </div>
         </div>
 
-        <script>
-            const loginText = document.querySelector(".title-text .login");
-            const loginForm = document.querySelector("form.login");
-            const loginBtn = document.querySelector("label.login");
-            const signupBtn = document.querySelector("label.signup");
-            const signupLink = document.querySelector("form .signup-link a");
-            signupBtn.onclick = (() => {
-                loginForm.style.marginLeft = "-50%";
-                loginText.style.marginLeft = "-50%";
-            });
-            loginBtn.onclick = (() => {
-                loginForm.style.marginLeft = "0%";
-                loginText.style.marginLeft = "0%";
-            });
-            signupLink.onclick = (() => {
-                signupBtn.click();
-                return false;
-            });
-        </script>  
+
 </body>
 
 </html>

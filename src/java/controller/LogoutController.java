@@ -54,7 +54,7 @@ public class LogoutController extends HttpServlet {
 
             }
         }
-        request.getRequestDispatcher("./view/login.jsp").forward(request, response);
+        request.getRequestDispatcher("./view/home.jsp").forward(request, response);
     }
 
     /**

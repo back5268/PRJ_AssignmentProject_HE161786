@@ -185,22 +185,27 @@ public class SessionDBContext extends DBContext<Session> {
                 ses.setDate(rs.getDate("date"));
                 ses.setIndex(rs.getInt("index"));
                 ses.setAttanded(rs.getBoolean("attanded"));
+                
                 Group g = new Group();
                 ses.setGroup(g);
                 g.setId(rs.getInt("gid"));
                 g.setName(rs.getString("gname"));
+                
                 Room r = new Room();
                 ses.setRoom(r);
                 r.setId(rs.getInt("rid"));
                 r.setName(rs.getString("rname"));
+                
                 TimeSlot t = new TimeSlot();
                 ses.setTimeslot(t);
                 t.setId(rs.getInt("tid"));
                 t.setDescription(rs.getString("description"));
+                
                 Lecturer l = new Lecturer();
                 ses.setLecturer(l);
                 l.setId(rs.getInt("lid"));
                 l.setName(rs.getString("lname"));
+                
                 Subject sub = new Subject();
                 g.setSubject(sub);
                 sub.setId(rs.getInt("subid"));

@@ -41,18 +41,67 @@
         }
 
         .container .box {
+            position: relative;
             height: 216px;
             width: 384px;
-            background-color: cyan;
+            background-color: aliceblue;
             border-radius: 8px;
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+       
+        
+        a {
+            text-decoration: none;
+            font-size: 24px;
         }
         
         .container .login_box {
             height: 216px;
             width: 64%;
-            background-color: cyan;
+            background-color: aliceblue;
             border-radius: 16px;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login_buttom {
+            height: 64px;
+            width: 240px;
+            background-color: blueviolet;
+            border-radius: 8px;
+            font-size: 32px;
+            font-weight: 600;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: aliceblue;
+        }
+        
+        .logout {
+            height: 32px;
+            width: 120px;
+            margin-left: 16px;
+            margin-right: 16px;
+            background-color: blueviolet;
+            border-radius: 8px; 
+            color: aliceblue;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login_box {
+            font-size: 24px;
+            font-weight: 600;
+            color: #845ec2;
         }
 
 
@@ -64,20 +113,16 @@
             <div class="login_box">
                 <c:if test="${sessionScope.account ne null}">
                     Hello ${sessionScope.account.displayname}, click
-                    <a href="logout">here</a> to logout.
+                    <a href="logout"> <div class="logout"> here </div> </a> to logout.
                 </c:if>
                 <c:if test="${sessionScope.account eq null}">
-                    click
-                    <a href="login">here</a> to login.
+                    <a href="login"><div class="login_buttom">LOGIN</div></a>
                 </c:if>
             </div>
             <div class="box_container">
-                <a href="<c:if test="${sessionScope.account.username eq 'sonnt'}">timetable?lid=1</c:if>
-                   <c:if test="${sessionScope.account.username eq 'mra'}">timetable?lid=2</c:if>
-                   <c:if test="${sessionScope.account.username eq 'mrb'}">timetable?lid=3</c:if>"> <div class="box">Timetable</div> </a> <br/>
-                <a href="<c:if test="${sessionScope.account.username eq 'sonnt'}">takeattandance?id=1</c:if>
-                   <c:if test="${sessionScope.account.username eq 'mra'}">takeattandance?id=6</c:if>"> <div class="box">Take attandance</div> </a><br/>
-                <a href="reportatt?gid=1"> <div class="box">Report attandance</div></a>
+                <a href="timetable?lid=1"> <div class="box"><p>Timetable</p></div> </a> <br/>
+                <a href="takeattandance?id=1"> <div class="box"><p>Take attandance</p></div> </a><br/>
+                <a href="reportatt?gid=1"> <div class="box"><p>Report attandance</p></div></a>
             </div>     
         </div>
     </body>

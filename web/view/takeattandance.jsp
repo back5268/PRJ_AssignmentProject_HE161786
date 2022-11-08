@@ -27,12 +27,14 @@
         body {
             height: 100%;
             width: 100%;
+            background-color: aliceblue;
         }
 
         .container {
             width: 95%;
             padding-left: 5%;
             padding-top: 32px;
+            
         }
 
         table, th, td {
@@ -60,24 +62,24 @@
                 Class: ${requestScope.ses.group.name} 
                 <c:if test="${requestScope.ses.group.id == 1}">
                     <select name="id">
-                    <option value="${requestScope.sesid}" >Session ${requestScope.ses.index}</option>
-                    <c:forEach var="i" begin="1" end="5" >
-                        <option value="${i}">Session ${i} </option>
-                    </c:forEach>
-                </select>
+                        <option value="${requestScope.sesid}" >Session ${requestScope.ses.index}</option>
+                        <c:forEach var="i" begin="1" end="5" >
+                            <option value="${i}">Session ${i} </option>
+                        </c:forEach>
+                    </select>
                 </c:if>
                 <c:if test="${requestScope.ses.group.id == 2}">
                     <select name="id">
-                    <option value="${requestScope.sesid}" >Session ${requestScope.ses.index}</option>
-                    <c:forEach var="i" begin="1" end="5" >
-                        <option value="${i+5}">Session ${i} </option>
-                    </c:forEach>
-                </select>
+                        <option value="${requestScope.sesid}" >Session ${requestScope.ses.index}</option>
+                        <c:forEach var="i" begin="1" end="5" >
+                            <option value="${i+5}">Session ${i} </option>
+                        </c:forEach>
+                    </select>
                 </c:if>
                 <input type="submit" name="view" value="View">
                 <br/>
                 Subject: ${requestScope.ses.group.subject.name} <br/>
-                Lecturer: ${sessionScope.account.displayname} <br/>
+                Lecturer: ${requestScope.ses.lecturer.name} <br/>
                 Room: ${requestScope.ses.room.name} <br/>
                 Time: ${requestScope.ses.date} ${requestScope.ses.timeslot.description}
                 <br/>

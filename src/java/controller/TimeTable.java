@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import model.Account;
 import model.Lecturer;
 import model.Role;
 import model.Session;
@@ -95,13 +96,16 @@ public class TimeTable extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-         if(session.getAttribute("account")==null){
+        Account a=(Account) session.getAttribute("account");
+         if(a==null){
              response.sendRedirect("login");
          }
         ArrayList<Role> roles = (ArrayList<Role>) session.getAttribute("roles");
         for (Role role : roles) {
             if (role.getId() == 1) {
                 processRequest(request, response);
+            } else {
+                response.getWriter().println("Access denid!!");
             }
         }
     }

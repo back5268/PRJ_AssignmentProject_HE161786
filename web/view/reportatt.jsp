@@ -26,19 +26,22 @@
         body {
             height: 100%;
             width: max-content;
+            background-color: aliceblue;
         }
 
         .container {
-            width: 95%;
             padding-left: 32px;
             padding-top: 32px;
+            
         }
 
         table, tr, th, td {
             border: 1px solid black;
             border-collapse: collapse;
             height: 64px;
-            min-width: 64px;
+            min-width: 116px;
+            align-items: center;
+            text-align: center;
         }
 
     </style>
@@ -53,6 +56,11 @@
                     <option value="3">PRJ301-03</option>
                     <option value="4">PRO192-01</option>
                 </select> <input type="submit" value="View"/> <br/> <br/>
+                Subject: ${requestScope.group.subject.name} <br/>
+                Room: <c:forEach items="${requestScope.sess}" begin="0" end="0" var="s">
+                    ${s.room.name}
+                </c:forEach> <br/>
+                Lecturer: ${requestScope.group.lecturer.name} <br/> <br/>
 
                 <input type="hidden" name="sesid" value="${param.id}"/>
                 <table border="1px">
@@ -71,22 +79,22 @@
                             <td>${s.id}</td>
                             <td>${s.name}</td>
                             <td></td>
-                            <c:forEach items="${requestScope.group.sessions}" var="s">
-                                <td><c:forEach items="${s.attandances}" var="a">
-                                    <c:if test="${a.student.id eq s.id}">
-                                        <c:if test="${a.present}">
-                                            <h3>P</h3>
+                            <c:forEach items="${requestScope.group.sessions}" var="grs">
+                                <c:forEach items="${ grs.attandances}" var="x">
+                                    <c:if test="${s.id eq x.student.id}">
+                                        <c:if test="${x.present}">
+                                            <th style="color: blue">P</th>
+                                            </c:if>
+                                            <c:if test="${!x.present}">
+                                            <th style="color: red">A</th>
+                                            </c:if>
                                         </c:if>
-                                        <c:if test="${!a.present}">
-                                            <h3>A</h3>
-                                        </c:if>    
-                                    </c:if>
+                                    </c:forEach>
                                 </c:forEach>
-                                </td>
+                                <c:forEach var="s" begin="${requestScope.size + 1}" end="30" >
+                                <td></td>
                             </c:forEach>
-                            <c:forEach var="s" begin="${requestScope.size + 1}" end="30" >
-                                <th></th>
-                            </c:forEach>
+
                         </tr>
                     </c:forEach>
                     </tr>
