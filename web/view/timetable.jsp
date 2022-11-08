@@ -82,9 +82,9 @@
                             <input type="submit" value="View"/>
                         </form> 
                     </td>
-                <c:forEach items="${requestScope.dates}" var="d">
-                    <td>${d}<br/> <hr> ${helper.getDayNameofWeek(d)}</td>
-                </c:forEach>
+                    <c:forEach items="${requestScope.dates}" var="d">
+                        <td>${d}<br/> <hr> ${helper.getDayNameofWeek(d)}</td>
+                    </c:forEach>
                 </tr>
                 <c:forEach items="${requestScope.slots}" var="slot">
                 <tr>
@@ -96,10 +96,10 @@
                                     <a href="att?id=${ses.id}">${ses.group.name}-${ses.group.subject.name}</a> 
                                     <br/>${ses.room.name}
                                     <c:if test="${ses.attanded}">
-                                        AAAAAAAAA
+                                        <a href="takeattandance?id=${ses.id}" > (Take) </a>
                                     </c:if>
                                     <c:if test="${!ses.attanded}">
-                                        BBBBBBBBBB
+                                        Not yet
                                     </c:if>
                                 </c:if>
                             </c:forEach>

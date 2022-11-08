@@ -51,33 +51,34 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String user = request.getParameter("username");
+        String user = request.getParameter("username");
         String pass = request.getParameter("password");
         String r = request.getParameter("remember");
         AccountDBContext db = new AccountDBContext();
         Account account = db.get(user, pass);
         
-        if(account == null){
-            response.getWriter().println("login failed!");         
-        }if(account != null){
+        if (account == null) {
+            request.setAttribute("mess", "Tai Khoan Hoac Mat Khau Khong Hop Le");
+            request.getRequestDispatcher("./view/login.jsp").forward(request, response);    
+        }
+        if (account != null) {
             request.getSession().setAttribute("account", account);
-
+            request.getSession().setAttribute("roles", db.getRoles(account.getUsername()));
             Cookie username = new Cookie("user", user);
-            Cookie password = new Cookie("pass",pass);
-            Cookie rem = new Cookie("remember",r);
-            if(r == null ){
+            Cookie password = new Cookie("pass", pass);
+            Cookie rem = new Cookie("remember", r);
+            if (r == null) {
                 username.setMaxAge(0);
                 password.setMaxAge(0);
                 rem.setMaxAge(0);
-            }else{
+            } else {
                 username.setMaxAge(60 * 60);// 1h
                 password.setMaxAge(60 * 60); // 1h
-                rem.setMaxAge(60*60); // 1h
+                rem.setMaxAge(60 * 60); // 1h
             }
             response.addCookie(username);
             response.addCookie(password);
             response.addCookie(rem);
-            request.getSession().setAttribute("account", account);
             response.sendRedirect("home");
     }
  
