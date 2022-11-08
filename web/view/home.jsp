@@ -44,14 +44,14 @@
             height: 216px;
             width: 384px;
             background-color: cyan;
-            border-radius: 24px;
+            border-radius: 8px;
         }
         
         .container .login_box {
             height: 216px;
             width: 64%;
             background-color: cyan;
-            border-radius: 24px;
+            border-radius: 16px;
             text-align: center;
         }
 

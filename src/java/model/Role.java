@@ -16,8 +16,9 @@ public class Role {
     private ArrayList<Account> accounts = new ArrayList<>();
     private ArrayList<Feature> features = new ArrayList<>();
 
-    public Role(int aInt, String string) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Role(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public int getId() {
