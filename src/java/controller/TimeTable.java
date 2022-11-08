@@ -40,49 +40,9 @@ public class TimeTable extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int lid;
-        try {
-            lid = Integer.parseInt(request.getParameter("lid"));
-            String raw_year = request.getParameter("year");
-            String raw_daymonth = request.getParameter("week");
-            
-            java.sql.Date from = null;
-            java.sql.Date to = null;
-            if (raw_year == null || raw_year.length() == 0 || raw_daymonth == null || raw_daymonth.length() == 0) {
-                Date today = new Date();
-                int todayOfWeek = DateTimeHelper.getDayofWeek(today);
-                Date e_from = DateTimeHelper.addDays(today, 2 - todayOfWeek);
-                Date e_to = DateTimeHelper.addDays(today, 8 - todayOfWeek);
-                from = DateTimeHelper.toDateSql(e_from);
-                to = DateTimeHelper.toDateSql(e_to);
-            } else {
-                from = java.sql.Date.valueOf(Integer.parseInt(raw_year) + "-" + raw_daymonth.substring(0,5));
-                to = DateTimeHelper.toDateSql(DateTimeHelper.addDays(DateTimeHelper.toDateUtil(from), 6));
-            }
-            
-            request.setAttribute("from", from);
-            request.setAttribute("to", to);
-            request.setAttribute("dates", DateTimeHelper.getDateList(from, to));
-            request.setAttribute("year", DateTimeHelper.getYear(from));
-            
-            request.setAttribute("daymonth", DateTimeHelper.getWeek(from, to));
-            request.setAttribute("daymonths", DateTimeHelper.getDayMonthList(from));
-            
-            TimeSlotDBContext slotDB = new TimeSlotDBContext();
-            ArrayList<TimeSlot> slots = slotDB.list();
-            request.setAttribute("slots", slots);
 
-            SessionDBContext sesDB = new SessionDBContext();
-            ArrayList<Session> sessions = sesDB.filter(lid, from, to);
-            request.setAttribute("sessions", sessions);
-
-            LecturerDBContext lecDB = new LecturerDBContext();
-            Lecturer lecturer = lecDB.get(lid);
-            request.setAttribute("lecturer", lecturer);
-        } catch (Exception e) {
-        }
-        request.getRequestDispatcher("view/timetable.jsp").forward(request, response);
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -96,14 +56,53 @@ public class TimeTable extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Account a=(Account) session.getAttribute("account");
-         if(a==null){
-             response.sendRedirect("login");
-         }
+        Account a = (Account) session.getAttribute("account");
+        if (a == null) {
+            response.sendRedirect("login");
+        }
         ArrayList<Role> roles = (ArrayList<Role>) session.getAttribute("roles");
         for (Role role : roles) {
-            if (role.getId() == 1) {
-                processRequest(request, response);
+            if (role.getId() == 1 || role.getId() == 2) {
+                int lid;
+                if(role.getId() == 1) lid = 1;
+                else lid = 2;
+                String raw_year = request.getParameter("year");
+                String raw_daymonth = request.getParameter("week");
+
+                java.sql.Date from = null;
+                java.sql.Date to = null;
+                if (raw_year == null || raw_year.length() == 0 || raw_daymonth == null || raw_daymonth.length() == 0) {
+                    Date today = new Date();
+                    int todayOfWeek = DateTimeHelper.getDayofWeek(today);
+                    Date e_from = DateTimeHelper.addDays(today, 2 - todayOfWeek);
+                    Date e_to = DateTimeHelper.addDays(today, 8 - todayOfWeek);
+                    from = DateTimeHelper.toDateSql(e_from);
+                    to = DateTimeHelper.toDateSql(e_to);
+                } else {
+                    from = java.sql.Date.valueOf(Integer.parseInt(raw_year) + "-" + raw_daymonth.substring(0, 5));
+                    to = DateTimeHelper.toDateSql(DateTimeHelper.addDays(DateTimeHelper.toDateUtil(from), 6));
+                }
+
+                request.setAttribute("from", from);
+                request.setAttribute("to", to);
+                request.setAttribute("dates", DateTimeHelper.getDateList(from, to));
+                request.setAttribute("year", DateTimeHelper.getYear(from));
+
+                request.setAttribute("daymonth", DateTimeHelper.getWeek(from, to));
+                request.setAttribute("daymonths", DateTimeHelper.getDayMonthList(from));
+
+                TimeSlotDBContext slotDB = new TimeSlotDBContext();
+                ArrayList<TimeSlot> slots = slotDB.list();
+                request.setAttribute("slots", slots);
+
+                SessionDBContext sesDB = new SessionDBContext();
+                ArrayList<Session> sessions = sesDB.filter(lid, from, to);
+                request.setAttribute("sessions", sessions);
+
+                LecturerDBContext lecDB = new LecturerDBContext();
+                Lecturer lecturer = lecDB.get(lid);
+                request.setAttribute("lecturer", lecturer);
+                request.getRequestDispatcher("view/timetable.jsp").forward(request, response);
             } else {
                 response.getWriter().println("Access denid!!");
             }
